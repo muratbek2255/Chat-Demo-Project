@@ -21,12 +21,11 @@ import java.util.List;
 @RequestMapping("/api/v1/chat")
 public class ChatController {
     private final ChatService chatService;
-    private final SimpMessagingTemplate messagingTemplate;
+    private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
-    public ChatController(ChatService chatService, SimpMessagingTemplate messagingTemplate) {
+    public ChatController(ChatService chatService) {
         this.chatService = chatService;
-        this.messagingTemplate = messagingTemplate;
     }
 
     @SubscribeMapping("/chat/{chatId}/messages")
@@ -34,8 +33,8 @@ public class ChatController {
             @AuthenticationPrincipal User user,
             @DestinationVariable("chatId") String chatId
     ) {
-        if (!Utils.isChatMember(user.getId(), chatId))
-            throw new AccessDeniedException("Not a chat member. UserId=" + user.getId() + ", chatId=" + chatId);
+//        if (!Utils.isChatMember(user.getId(), chatId))
+//            throw new AccessDeniedException("Not a chat member. UserId=" + user.getId() + ", chatId=" + chatId);
 
         return chatService.getLastMessages(chatId);
     }

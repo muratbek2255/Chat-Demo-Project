@@ -32,7 +32,6 @@ import static org.springframework.messaging.simp.SimpMessageType.*;
 
 
 @Configuration
-@EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     public static final long[] HEARTBEAT = {10_000, 10_000};
@@ -43,7 +42,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public static final String[] APP_PREFIXES = new String[]{"/topic/", "/user", "/app"};
 
     @Lazy
-    private final SimpMessagingTemplate messagingTemplate;
+    private SimpMessagingTemplate messagingTemplate;
     @Lazy
     private final SessionService sessionService;
     @Lazy
@@ -53,9 +52,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public WebSocketConfig(SimpMessagingTemplate messagingTemplate, SessionService sessionService,
+    public WebSocketConfig(SessionService sessionService,
                            SessionRepository<? extends Session> sessionRepository, ObjectMapper objectMapper) {
-        this.messagingTemplate = messagingTemplate;
         this.sessionService = sessionService;
         this.sessionRepository = sessionRepository;
         this.objectMapper = objectMapper;

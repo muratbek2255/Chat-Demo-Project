@@ -15,7 +15,7 @@ public class Utils {
         return minId + "_" + maxId;
     }
 
-    public static boolean isChatMember(long userId, String chatId) {
+    public static boolean isChatMember(int userId, String chatId) {
         String[] members = chatId.split("_");
 
         return Long.parseLong(members[0]) == userId || Long.parseLong(members[1]) == userId;

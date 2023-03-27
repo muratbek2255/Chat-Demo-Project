@@ -17,7 +17,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "users")
 public class User implements UserDetails {
@@ -42,6 +41,13 @@ public class User implements UserDetails {
 
     @Column(name = "first_time_login")
     Timestamp first_time_login;
+
+    public User(int id, String phoneNumber, String password, String role, Boolean locked, Timestamp first_time_login) {
+    }
+
+    public User() {
+
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
